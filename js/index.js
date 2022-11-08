@@ -11,7 +11,7 @@ let snakeArr = [
     {x: 13, y: 15}
 ];
 
-food = {x: 10, y: 6};
+food = {x: 6, y: 7};
 
 //easy hard 
 function easy()
@@ -99,10 +99,27 @@ function gameEngine()
         gameOverSound.play();
         musicSound.pause();
         snakeVelocity =  {x: 0, y: 0}; 
-        alert("GAME OVER. PRESS ANY KEY TO CONTINUE!");
+        // alert("GAME OVER. PRESS ANY KEY TO CONTINUE!");
         snakeArr = [{x: 13, y: 15}];
         musicSound.play();
         score = 0; 
+        
+        var modal = document.getElementById("myModal");
+
+       
+        var span = document.getElementsByClassName("close")[0];
+        (function () {
+             modal.style.display = "block";
+          })();
+          window.onclick = function(event) {
+            if (event.target == modal) {
+              modal.style.display = "none";
+            }
+          }
+          span.onclick = function() {
+            modal.style.display = "none";
+          }
+
     }
 
     // If you have eaten the food, increment the score and regenerate the food
@@ -164,4 +181,3 @@ else{
     hiscoreval = JSON.parse(hiscore);
     hiscoreBox.innerHTML = "HiScore: " + hiscore;
 }
-
