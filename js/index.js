@@ -6,11 +6,8 @@ const moveSound = new Audio('music/move.mp3');
 const musicSound = new Audio('music/music.mp3');
 let speed = localStorage.getItem("speed");
 let score = 0;
-let lastPaintTime = 0;
-let snakeArr = [
-    {x: 13, y: 15}
-];
-
+let refresh = 0;
+let snakeArr = [{x: 13, y: 15}];
 food = {x: 6, y: 7};
 
 //easy hard 
@@ -19,12 +16,12 @@ function easy()
     speed = 10;
     localStorage.setItem("speed", JSON.stringify(10));
 }
-
 function hard()
 {
     speed = 50;
     localStorage.setItem("speed", JSON.stringify(50));
 }
+
 //animation department
 window.requestAnimationFrame(main);
 window.addEventListener('keydown', e =>
@@ -32,7 +29,8 @@ window.addEventListener('keydown', e =>
     snakeVelocity = {x: 0, y: 1} // Start the game
     moveSound.play();
     musicSound.play();
-    switch (e.key) {
+    switch (e.key) 
+    {
         case "ArrowUp":
             console.log("ArrowUp");
             snakeVelocity.x = 0;
@@ -65,12 +63,11 @@ window.addEventListener('keydown', e =>
 function main(fps) 
 {
     window.requestAnimationFrame(main);//to render animation
-    // console.log(fps)
-    if((fps - lastPaintTime)/1000 < 1/speed)
+    if((fps - refresh)/1000 < 1/speed)
     {
         return;
     }
-    lastPaintTime = fps;
+    refresh = fps;
     gameEngine();
 }
 
@@ -85,7 +82,8 @@ function isCollide(snake)
         }
     }
     // If you bump into the wall
-    if(snake[0].x >= 18 || snake[0].x <=0 || snake[0].y >= 18 || snake[0].y <=0){
+    if(snake[0].x >= 18 || snake[0].x <=0 || snake[0].y >= 18 || snake[0].y <=0)
+    {
         return true;
     }
         
@@ -95,28 +93,29 @@ function isCollide(snake)
 function gameEngine()
 {
     // Part 1: Updating the snake array & Food
-    if(isCollide(snakeArr)){
+    if(isCollide(snakeArr))
+    {
         gameOverSound.play();
         musicSound.pause();
-        snakeVelocity =  {x: 0, y: 0}; 
-        // alert("GAME OVER. PRESS ANY KEY TO CONTINUE!");
         snakeArr = [{x: 13, y: 15}];
+        snakeVelocity =  {x: 0, y: 0}; 
         musicSound.play();
         score = 0; 
-        
+        //display gameover modal popup
         var modal = document.getElementById("myModal");
-
-       
         var span = document.getElementsByClassName("close")[0];
         (function () {
              modal.style.display = "block";
-          })();
-          window.onclick = function(event) {
-            if (event.target == modal) {
+            })();
+          window.onclick = function(event) 
+          {
+            if (event.target == modal) 
+            {
               modal.style.display = "none";
             }
           }
-          span.onclick = function() {
+          span.onclick = function() 
+          {
             modal.style.display = "none";
           }
 
@@ -125,8 +124,9 @@ function gameEngine()
     // If you have eaten the food, increment the score and regenerate the food
     if(snakeArr[0].y === food.y && snakeArr[0].x ===food.x){
         foodSound.play();
-        score += 1;
-        if(score>hiscoreval){
+        score = score +1;
+        if(score > hiscoreval)
+        {
             hiscoreval = score;
             localStorage.setItem("hiscore", JSON.stringify(hiscoreval));
             hiscoreBox.innerHTML = "HiScore: " + hiscoreval;
