@@ -11,7 +11,7 @@ let snakeArr = [
     {x: 13, y: 15}
 ];
 
-food = {x: 6, y: 7};
+food = {x: 10, y: 6};
 
 //easy hard 
 function easy()
